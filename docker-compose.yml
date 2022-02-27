@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+  client:
+    build: ./client
+    container_name: wolf-sheep-rabbit-client
+    depends_on:
+      - server
+    ports:
+      - "80:80"
+  server:
+    build: ./server
+    container_name: wolf-sheep-rabbit-server
+    env_file: ./server/.env
+    depends_on:
+      - postgres
+  postgres:
+    container_name: wolf-sheep-rabbit-db
+    image: postgres:13.6-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./postgresdata:/var/lib/postgresql/data
+      - ./initdb.sql:/docker-entrypoint-initdb.d/db_init.sql
+    restart: always

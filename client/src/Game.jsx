@@ -49,7 +49,10 @@ export default function (props) {
     }
 
     function checkWinner(data) {
-        if (data["player1-choice"] && data["player2-choice"]) {
+        if(data.player1 == null && data.player2 == null){
+            window.location.reload();
+        }
+        else if (data["player1-choice"] && data["player2-choice"]) {
             setFetchRoom(false);
             let myChoice = "";
             let opChoice = "";

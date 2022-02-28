@@ -113,15 +113,17 @@ async function cleanRoom(roomId){
 }
 
 function isRoomClean(roomId){
-    const details = getRoomDetails(roomId);
-    if(details.player1 == null && details.player2 == null && details && details["player1-choice"] == null && details["player2-choice"] == null)
-        return true;
-    else
-        return false;
+    let result = false;
+    const details = getRoomDetails(roomId).then(details => {
+        if(details.player1 == null && details.player2 == null && details && details["player1-choice"] == null && details["player2-choice"] == null){
+            result = true;
+        }
+    });
+    return result;
 }
 
 function cleanAFKs(roomCount){
-    for(let i = 0; i < roomCount; i++){
+    for(let i = 1; i <= roomCount; i++){
         if(!activeRooms.has(i) && !isRoomClean(i) ){
             cleanRoom(i);
             console.log("Room "+i+" cleaned");

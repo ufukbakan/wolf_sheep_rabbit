@@ -41,7 +41,7 @@ export default function LoginForm(props) {
     }
 
     return (
-        <div className="absolute-center login-form">
+        <div className="login-form">
             <div className={classNames({
                 "instructions": true,
                 "hide": !showInstructions

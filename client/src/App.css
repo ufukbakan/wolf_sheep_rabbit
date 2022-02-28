@@ -9,6 +9,10 @@ body{
   overflow: hidden;
 }
 
+#root{
+  height: 100vh;
+}
+
 :root{
   --primary-color: rgb(101, 160, 140);
 }
@@ -26,6 +30,10 @@ select{
 
 .login-form{
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .instructions{
@@ -54,6 +62,13 @@ select{
 .instructions li::before{
   counter-increment: item;
   content: counter(item) ". ";
+}
+
+.relative-center{
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .absolute-center{
@@ -112,6 +127,12 @@ select{
 
 label > span{
   margin-right: 1ch;
+}
+
+.main-grid{
+  display: grid;
+  grid-template-rows: auto 3.1em;
+  height: 100%;
 }
 
 .game-screen{
@@ -197,6 +218,23 @@ label > span{
 }
 .winner-modal.win{
   background-image: url("./assets/celebrate.gif");
+}
+
+footer{
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1em;
+  background-color: #222;
+  color: #fff;
+}
+
+a{
+  text-decoration: underline;
+  color: inherit;
+}
+a:visited{
+  color: inherit;
 }
 
 @media screen and (max-width: 500px) {

@@ -3,6 +3,4 @@ FROM node:lts-alpine3.14
 WORKDIR /client
 COPY . ./
 RUN npm install
-EXPOSE 80
-CMD npm run build
-CMD npm run preview
+CMD npm run start

@@ -13,14 +13,14 @@ export default function (props) {
     const [fetchRoom, setFetchRoom] = useState(true);
     const [timer, setTimer] = useState(undefined);
     const [firstFecth, setFirstFecth] = useState(true);
-    //const [myChoice, setMyChoice] = useState(undefined);
+    const [myChoice, setMyChoice] = useState(undefined);
     const [status, setStatus] = useState("");
     const [modalContent, setModalContent] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [didIwin, setDidIwin] = useState(false);
 
     useEffect(() => {
-        if(timer){
+        if (timer) {
             clearInterval(timer);
         }
         setTimer(setInterval(fetchTick, 1000));
@@ -28,14 +28,23 @@ export default function (props) {
 
     function fetchTick() {
         if (fetchRoom) {
-            MyAxios.get("/api/rooms/"+props.roomId).then((response) => {
+            MyAxios.get("/api/rooms/" + props.roomId).then((response) => {
                 checkWinner(response.data);
+                fetchChoice(response.data);
                 setPlayerNames([response.data.player1, response.data.player2]);
                 prepareStatusText(response.data);
             });
             if (firstFecth) {
                 setFirstFecth(false);
             }
+        }
+    }
+
+    function fetchChoice(data) {
+        if (props.myPlayerNo == 1) {
+            setMyChoice(data["player1-choice"]);
+        } else {
+            setMyChoice(data["player2-choice"]);
         }
     }
 
@@ -84,20 +93,20 @@ export default function (props) {
             setModalContent(content);
             setShowModal(true);
             setTimeout(resetMyChoice, 1001);
-        } else{
+        } else {
             setFetchRoom(true);
         }
     }
 
     function resetMyChoice() {
-        MyAxios.delete("/api/rooms/"+props.roomId);
+        MyAxios.delete("/api/rooms/" + props.roomId);
     }
 
     function playAgain() {
         setShowModal(false);
         setFirstFecth(true);
         setTimeout(() => {
-            MyAxios.post("/api/rooms/"+props.roomId+"/as/" + props.myPlayerNo, { "playerName": props.myPlayerName }).then((response) => {
+            MyAxios.post("/api/rooms/" + props.roomId + "/as/" + props.myPlayerNo, { "playerName": props.myPlayerName }).then((response) => {
                 if (response.status === 200) {
                     setFetchRoom(true);
                 } else {
@@ -128,45 +137,55 @@ export default function (props) {
     }
 
     function sendChoice(value) {
-        MyAxios.put("/api/rooms/"+props.roomId, {
+        MyAxios.put("/api/rooms/" + props.roomId, {
             playerNo: props.myPlayerNo,
             choice: value
+        }).then(() => {
+            setMyChoice(value);
         })
     }
 
-    return (
-        <div className="game-screen">
-            <div className={classNames({
-                "loading-circle": true,
-                "hide": !firstFecth
-            })} >
-                <img src={loading} />
-            </div>
+    function renderChoiceText(){
+        if(myChoice == undefined || myChoice.length == null){
+            return <span>Seçimini Yap<br></br>▼</span>
+        }else{
+            return <span>Seçimini Hala Değiştirebilirsin<br></br>▼</span>
+        }
+    }
 
+    return (
+        <div className="screen">
             <div className="players">
                 <div className="player-name">{playerNames[0]}</div>
                 <div className="player-name player-vs">VS.</div>
                 <div className="player-name">{playerNames[1]}</div>
             </div>
 
-            <div className="status">{status}</div>
+            <div className="game-screen">
+                <div className={classNames({
+                    "loading-circle": true,
+                    "hide": !firstFecth
+                })} >
+                    <img src={loading} />
+                </div>
+                <br />
+                <div className="choices">
+                    <h2>{renderChoiceText()}</h2>
+                    <Choice active={myChoice == "wolf"} img={wolf} value="wolf" sendChoice={sendChoice}></Choice>
+                    <Choice active={myChoice == "sheep"} img={sheep} value="sheep" sendChoice={sendChoice}></Choice>
+                    <Choice active={myChoice == "rabbit"} img={rabbit} value="rabbit" sendChoice={sendChoice}></Choice>
+                </div>
+                <div className="status">{status}</div>
 
-            <br />
-
-            <div className="choices">
-                <Choice img={wolf} value="wolf" sendChoice={sendChoice}></Choice>
-                <Choice img={sheep} value="sheep" sendChoice={sendChoice}></Choice>
-                <Choice img={rabbit} value="rabbit" sendChoice={sendChoice}></Choice>
-            </div>
-
-            <div className={
-                classNames({
-                    "winner-modal": true,
-                    "hide": !showModal,
-                    "win": didIwin
-                })
-            } onClick={playAgain}>
-                {modalContent}
+                <div className={
+                    classNames({
+                        "winner-modal": true,
+                        "hide": !showModal,
+                        "win": didIwin
+                    })
+                } onClick={playAgain}>
+                    {modalContent}
+                </div>
             </div>
         </div>
     )

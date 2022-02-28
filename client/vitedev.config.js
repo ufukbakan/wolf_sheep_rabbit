@@ -7,7 +7,7 @@ export default defineConfig({
     port: 80,
     proxy: {
       '/api': {
-        target: 'http://wolf-sheep-rabbit-server:6512',
+        target: 'http://localhost:6512',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }
@@ -17,7 +17,7 @@ export default defineConfig({
     port: 80,
     proxy: {
       '/api': {
-        target: 'http://wolf-sheep-rabbit-server:6512',
+        target: 'http://localhost:6512',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }

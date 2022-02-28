@@ -20,6 +20,42 @@ input{
   border-style: dashed;
 }
 
+select{
+  border: 1px solid black;
+}
+
+.login-form{
+  width: 100%;
+}
+
+.instructions{
+  position: fixed;
+  display: flex;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  counter-reset: item;
+  z-index: 8;
+  background-image: linear-gradient(to bottom,#000d, #000d);
+  color: #fff;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.instructions ol{
+  padding: 1em;
+}
+.instructions li{
+  display: table;
+  margin-bottom: .5em;
+}
+.instructions li::before{
+  counter-increment: item;
+  content: counter(item) ". ";
+}
+
 .absolute-center{
   position: absolute;
   left: 50%;
@@ -68,8 +104,14 @@ input{
 }
 
 .hide{
+  transition: opacity 0.4s, top 0.4s;
   pointer-events: none;
   opacity: 0;
+  top: 4px;
+}
+
+label > span{
+  margin-right: 1ch;
 }
 
 .game-screen{
@@ -79,6 +121,8 @@ input{
 .players{
   display: table;
   width: 100%;
+  padding: 0 1em;
+  box-sizing: border-box;
 }
 
 .player-name{
@@ -110,6 +154,8 @@ input{
   margin: 1em 5vw;
   width: 12vw;
   height: 12vw;
+  min-width: 100px;
+  min-height: 100px;
   position: relative;
   transition: all 0.5s;
   cursor: pointer;
@@ -120,9 +166,18 @@ input{
 }
 
 .choice img{
+  display: inline-block;
   width: 100%;
   height: 100%;
   object-fit: contain;
+  padding: 1em;
+  border: .3vw solid transparent;
+  box-sizing: border-box;
+  border-radius: 25px;
+}
+
+.choice.active img{
+  border: .3vw solid orange;
 }
 
 .winner-modal{
@@ -147,9 +202,18 @@ input{
 @media screen and (max-width: 500px) {
   .choice{
     display: block;
+    text-align: center;
     width: 100%;
     height: 16vh;
     text-align: center;
-    margin: 4em 0;
+    margin: 2em 0;
+  }
+  .choice img{
+    width: 16vh;
+    height: 16vh;
+    border-width: 5px;
+  }
+  .choice.active img{
+    border-width: 5px;
   }
 }

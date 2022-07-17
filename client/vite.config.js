@@ -5,6 +5,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   server: {
     port: 80,
+    hmr:{
+      port: 443
+    },
     proxy: {
       '/api': {
         target: 'http://wolf-sheep-rabbit-server:6512',

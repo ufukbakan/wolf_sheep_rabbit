@@ -1,20 +1,46 @@
-name: '' #set whatevername you want to your github job
+# Your workflow name.
+name: Deploy to heroku.
+
+# Run workflow on every push to master branch.
 on:
   push:
-    branches: [main]
-# set the events you would like to trigger this job
+    branches: [master]
+
+# Your workflows jobs.
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # Check-out your repository.
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Build, Push and Deploy to Heroku #set the whatever name you want to this step
-        id: heroku
-        uses: snithyanantham/docker-compose-multiple-apps-heroku-deploy@v1.0  # use the latest version of the action
+      - name: Deploy Database
+        uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
         with:
-          email: ${{ secrets.HEROKU_EMAIL }} # your heroku email
-          api_key: ${{ secrets.HEROKU_API_KEY }} # your  heroku api key
-          docker_compose_file: './docker-compose.yml' # set the path to the folder where the docker-compose file is located
-          heroku_apps: '[ {"imagename":"wolf-sheep-rabbit-client","appname":"wolf-sheep-rabbit","apptype":"web"}, {"imagename":"wolf-sheep-rabbit-server","appname":"wolf-sheep-rabbit","apptype":"web"}, {"imagename":"wolf-sheep-rabbit-db","appname":"wolf-sheep-rabbit","apptype":"worker"}]'
-          # List of Docker Image name, Heroku app and Heroku app type
+          email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          dockerfile_directory: ./
+          dockerfile_name: dockerfile
+          docker_options: "--no-cache"
+          process_type: web
+      - name: Deploy Server
+        uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
+        with:
+          email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          dockerfile_directory: ./server
+          dockerfile_name: dockerfile
+          docker_options: "--no-cache"
+          process_type: web
+      - name: Deploy Client
+        uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
+        with:
+          email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          dockerfile_directory: ./client
+          dockerfile_name: dockerfile
+          docker_options: "--no-cache"
+          process_type: web

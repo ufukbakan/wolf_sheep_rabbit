@@ -8,6 +8,8 @@ services:
     restart: on-failure
     depends_on:
       - server
+    expose:
+      - 80
     ports:
       - "80:80"
   server:

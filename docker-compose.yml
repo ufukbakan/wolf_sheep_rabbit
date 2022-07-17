@@ -8,6 +8,8 @@ services:
     restart: on-failure
     depends_on:
       - wolf-sheep-rabbit-server
+    networks:
+      - network1
     expose:
       - 80
     ports:
@@ -19,14 +21,16 @@ services:
       dockerfile: dockerfile
     container_name: wolf-sheep-rabbit-server
     env_file: ./server/.env
-    network_mode: container:wolf-sheep-rabbit-client
+    networks:
+      - network1
     depends_on:
       - wolf-sheep-rabbit-db
     
   wolf-sheep-rabbit-db:
     container_name: wolf-sheep-rabbit-db
     image: postgres:13.6-alpine
-    network_mode: container:wolf-sheep-rabbit-client
+    networks:
+      - network1
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -34,3 +38,8 @@ services:
       - ./postgresdata:/var/lib/postgresql/data
       - ./initdb.sql:/docker-entrypoint-initdb.d/db_init.sql
     restart: always
+
+networks:
+  network1:
+    external: true
+    name: network1

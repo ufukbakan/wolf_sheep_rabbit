@@ -9,4 +9,5 @@ RUN apt update -y
 RUN apt install docker-ce -y
 # RUN systemctl status docker
 RUN apt-get install docker-compose-plugin -y
-RUN service docker restart && docker compose up -d
+RUN service docker restart
+CMD docker compose up -d

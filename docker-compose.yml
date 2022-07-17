@@ -1,6 +1,7 @@
 version: "3.7"
 services:
   client:
+    entrypoint: /
     build: ./client
     container_name: wolf-sheep-rabbit-client
     depends_on:
@@ -8,6 +9,7 @@ services:
     ports:
       - "80:80"
   server:
+    entrypoint: /
     build: ./server
     container_name: wolf-sheep-rabbit-server
     env_file: ./server/.env

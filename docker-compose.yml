@@ -1,16 +1,16 @@
 version: "3.7"
 services:
   client:
-    build: ./client
+    build: /client
     container_name: wolf-sheep-rabbit-client
     depends_on:
       - server
     ports:
       - "80:80"
   server:
-    build: ./server
+    build: /server
     container_name: wolf-sheep-rabbit-server
-    env_file: ./server/.env
+    env_file: /server/.env
     depends_on:
       - postgres
   postgres:

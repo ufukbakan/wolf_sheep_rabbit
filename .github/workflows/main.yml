@@ -14,26 +14,26 @@ jobs:
       # Check-out your repository.
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Deploy Database
-        uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
-        with:
-          email: ${{ secrets.HEROKU_EMAIL }}
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-          dockerfile_directory: ./
-          dockerfile_name: dockerfile
-          docker_options: "--no-cache"
-          process_type: web
-      - name: Deploy Server
-        uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
-        with:
-          email: ${{ secrets.HEROKU_EMAIL }}
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-          dockerfile_directory: ./server
-          dockerfile_name: dockerfile
-          docker_options: "--no-cache"
-          process_type: web
+      # - name: Deploy Database
+      #   uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
+      #   with:
+      #     email: ${{ secrets.HEROKU_EMAIL }}
+      #     heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+      #     heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+      #     dockerfile_directory: ./
+      #     dockerfile_name: dockerfile
+      #     docker_options: "--no-cache"
+      #     process_type: web
+      # - name: Deploy Server
+      #   uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
+      #   with:
+      #     email: ${{ secrets.HEROKU_EMAIL }}
+      #     heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+      #     heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+      #     dockerfile_directory: ./server
+      #     dockerfile_name: dockerfile
+      #     docker_options: "--no-cache"
+      #     process_type: web
       - name: Deploy Client
         uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
         with:

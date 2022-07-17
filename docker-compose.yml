@@ -1,6 +1,6 @@
 version: "3.7"
 services:
-  client:
+  wolf-sheep-rabbit-client:
     build:
       context: ./client
       dockerfile: dockerfile
@@ -12,7 +12,7 @@ services:
       - 80
     ports:
       - "80:80"
-  server:
+  wolf-sheep-rabbit-server:
     restart: on-failure
     build:
       context: ./server
@@ -22,7 +22,7 @@ services:
     depends_on:
       - postgres
     
-  postgres:
+  wolf-sheep-rabbit-db:
     container_name: wolf-sheep-rabbit-db
     image: postgres:13.6-alpine
     environment:

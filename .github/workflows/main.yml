@@ -16,5 +16,5 @@ jobs:
           email: ${{ secrets.HEROKU_EMAIL }} # your heroku email
           api_key: ${{ secrets.HEROKU_API_KEY }} # your  heroku api key
           docker_compose_file: './docker-compose.yml' # set the path to the folder where the docker-compose file is located
-          heroku_apps: '[{"imagename":"client","appname":"wolf-sheep-rabbit","apptype":"web"},{"imagename":"server","appname":"wsr-server","apptype":"web"},{"imagename":"postgres","appname":"wsr-db","apptype":"worker"}]'
+          heroku_apps: '[ {"imagename":"wolf-sheep-rabbit-client","appname":"wolf-sheep-rabbit","apptype":"web"}, {"imagename":"wolf-sheep-rabbit-server","appname":"wolf-sheep-rabbit","apptype":"web"}, {"imagename":"wolf-sheep-rabbit-db","appname":"wolf-sheep-rabbit","apptype":"worker"}]'
           # List of Docker Image name, Heroku app and Heroku app type

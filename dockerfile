@@ -10,8 +10,3 @@ RUN apt install docker-ce -y
 # RUN systemctl status docker
 RUN apt-get install docker-compose-plugin -y
 RUN docker compose up -d
-# FROM postgres:13.6-alpine
-# WORKDIR /
-# ENV POSTGRES_USER postgres
-# ENV POSTGRES_PASSWORD=postgres
-# COPY ./initdb.sql /docker-entrypoint-initdb.d/db_init.sql

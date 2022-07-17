@@ -7,7 +7,7 @@ services:
     container_name: wolf-sheep-rabbit-client
     restart: on-failure
     depends_on:
-      - server
+      - wolf-sheep-rabbit-server
     expose:
       - 80
     ports:
@@ -20,7 +20,7 @@ services:
     container_name: wolf-sheep-rabbit-server
     env_file: ./server/.env
     depends_on:
-      - postgres
+      - wolf-sheep-rabbit-db
     
   wolf-sheep-rabbit-db:
     container_name: wolf-sheep-rabbit-db

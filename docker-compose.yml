@@ -19,12 +19,14 @@ services:
       dockerfile: dockerfile
     container_name: wolf-sheep-rabbit-server
     env_file: ./server/.env
+    network_mode: container:wolf-sheep-rabbit-client
     depends_on:
       - wolf-sheep-rabbit-db
     
   wolf-sheep-rabbit-db:
     container_name: wolf-sheep-rabbit-db
     image: postgres:13.6-alpine
+    network_mode: container:wolf-sheep-rabbit-client
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres

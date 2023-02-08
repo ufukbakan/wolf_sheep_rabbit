@@ -20,6 +20,7 @@ services:
       context: ./server
       dockerfile: dockerfile
     container_name: wolf-sheep-rabbit-server
+    hostname: wolf-sheep-rabbit-server
     env_file: ./server/.env
     networks:
       - network1
